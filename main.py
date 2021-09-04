@@ -58,13 +58,12 @@ def game_over_text():
 lvlspeed=[0,7,10,14,17,21]
 level=1
 health=100
-lives_label = font.render(f"Lives: {health}", 1, (255,255,255))
-level_label = font.render(f"Level: {level}", 1, (255,255,255))
-
+# lives_label = font.render(f"Lives: {health}", 1, (255,255,255))
 
 def showlvl():
+    level_label = font.render(f"Level: {level}", True, (255,255,255))
     screen.blit(level_label, (WIDTH - level_label.get_width() - 10, 10))
-    screen.blit(lives_label, (WIDTH - lives_label.get_width() - 10, 20+level_label.get_height()))
+    # screen.blit(lives_label, (WIDTH - lives_label.get_width() - 10, 20+level_label.get_height()))
 
 #enemy
 #Ready - you can't see the bullet
@@ -80,7 +79,7 @@ for i in range(numenemies):
     enemyimg.append(pygame.image.load('alien.png'))
     enemyX.append(random.randint(0,735))
     enemyY.append(random.randint(50,150))
-    enemyX_change.append(6)
+    enemyX_change.append(lvlspeed[level])
     enemyY_change.append(40)
 
 
@@ -213,6 +212,11 @@ while running:
             enemyY[i]=random.randint(50,150)
             
         enemy(enemyX[i],enemyY[i],i)
+
+        if enemyY[i]>=600:
+            enemyX[i]=random.randint(0,736)
+            enemyY[i]=random.randint(50,150)
+            enemy(enemyX[i],enemyY[i],i)
 
     if out==True:
         game_over_text()
